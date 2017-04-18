@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html ng-app= 'myApp'>
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="font-awesome/css/font-awesome.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Pontano+Sans|Quicksand|Sanchez" rel="stylesheet">
+    <title>Feltso-Dashboard</title>
+  </head>
+  <body  ng-controller='mainCtrl'>
+
+    <nav class="navbar navbar-default">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="#">
+            <div class="dash">
+              Dashboard <div class="feltso">
+                FeltSo
+              </div>
+            </div>
+          </a>
+        </div>
+      </div>
+    </nav>
+
+   <div class="positive-chart col-lg-6 col-md-6 col-sm-12 col-xs-12" style="font-family: 'Quicksand', sans-serif;font-size: 17px">
+      <chart title="Positives Sentiments Over Time" xData="lineChartXData_pos" yData="lineChartYData_pos" xName="Month" yName="Count" subtitle=""></chart>
+    </div>
+
+    <div class="negative-chart col-lg-6 col-md-6 col-sm-12 col-xs-12">
+       <chart title="Negative Sentiments Over Time" xData="lineChartXData_neg" yData="lineChartYData_neg" xName="Month" yName="Count" subtitle=""></chart>
+     </div>
+<div class="">
+     <div class="pie-chart col-lg-6 col-md-6 col-sm-12 col-xs-12">
+     <hc-pie-chart title="Source Wise Stats- Facebook" data="pieData">Source Wise Stats</hc-pie-chart>
+   </div>
+<div class="pdf col-lg-2 col-md-2 col-sm-12 col-xs-12">
+  <button type="button" name="button" ng-click="download()"><i class="fa fa-download" aria-hidden="true"></i><br>Download PDF<br>
+    <i class="fa fa-file-pdf-o" aria-hidden="true"></i></button>
+</div>
+    <div class="tile col-lg-4 col-md-4 col-sm-4 col-xs-12" >
+      <div class="panel panel-default positive-panel">
+      <div class="panel-body">
+        <i class="fa fa-thumbs-up" aria-hidden="true"></i>&nbsp;&nbsp;Top Likers <span class="pull-right">Percentage</span>
+      </div>
+    </div>
+      <div class="list-group">
+        <div ng-repeat="tlikers in topLikers">
+        <a href="{{tlikers.url}}" class="list-group-item" target="_blank">{{tlikers.name}}<span class="badge">{{tlikers.percentage}}%</span></a>
+      </div>
+      </div>
+      <div class="panel panel-default negative-panel">
+      <div class="panel-body">
+        <i class="fa fa-thumbs-o-down" aria-hidden="true"></i>&nbsp;&nbsp;Top Dislikers <span class="pull-right">Percentage</span>
+      </div>
+    </div>
+      <div class="list-group dislikers-tile">
+        <div ng-repeat="tdlikers in topDislikers">
+        <a href="{{tdlikers.url}}" class="list-group-item" target="_blank">{{tdlikers.name}}<span class="badge">{{tdlikers.percentage}}%</span></a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<!--    <div class="list-group">
+      <div ng-repeat="posposts in topPosPosts">
+        <a href="{{posposts.permalink_url}}" class="list-group-item">
+          <img src="{{posposts.picture}}" alt="Post Image" />
+          <p class="list-group-item-text">{{posposts.message}}</p>
+        </a>
+    </div>
+  </div> -->
+  <div class="tile col-lg-6 col-md-6 col-sm-6 col-xs-12">
+<div class="panel panel-default positive-panel">
+  <div class="panel-body">
+      <i class="fa fa-heart" aria-hidden="true">&nbsp;&nbsp;</i>Top Positive Posts
+    <span class="pull-right">Percentage</span>
+  </div>
+</div>
+  <div class="list-group">
+    <div ng-repeat="posposts in topPosPosts | orderBy:sort">
+    <a href="{{posposts.permalink_url}}" class="list-group-item" target="_blank">
+      <img class="pic" src="{{posposts.picture}}" alt="" />
+      <span class="">{{posposts.message}}</span>
+      <span class="badge ">{{posposts.percentage}}%</span>
+    </a>
+    </div>
+  </div>
+</div>
+<div class="tile col-lg-6 col-md-6 col-sm-6 col-xs-12">
+  <div class="panel panel-default negative-panel">
+  <div class="panel-body">
+    <i class="fa fa-frown-o" aria-hidden="true"></i>&nbsp;&nbsp;Top Negative Posts
+     <span class="pull-right">Percentage</span>
+  </div>
+</div>
+  <div class="list-group">
+    <div ng-repeat="negposts in topNegPosts | orderBy:sort">
+    <a href="{{negposts.permalink_url}}" class="list-group-item" target="_blank">
+      <img class="pic" src="{{negposts.picture}}" alt=""/>
+      {{negposts.message}}<span class="badge">{{negposts.percentage}}%</span></a>
+    </div>
+  </div>
+</div>
+
+<div class="tile col-lg-6 col-md-6 col-sm-6 col-xs-12">
+  <div class="panel panel-default positive-panel">
+  <div class="panel-body">
+    <i class="fa fa-quote-left" aria-hidden="true"></i>&nbsp;&nbsp;Top Positive Comments <span class="pull-right" >
+      Score</span>
+  </div>
+</div>
+  <div class="list-group">
+    <div ng-repeat="poscomments in topPosComments | orderBy:sort">
+    <a href="{{poscomments.user_info.url}}" class="list-group-item" target="_blank"><b>{{poscomments.user_info.name}}:</b>
+      <br>{{poscomments.text}}<span class="badge">{{poscomments.score}}</span></a>
+    </div>
+  </div>
+</div>
+
+<div class="tile col-lg-6 col-md-6 col-sm-6 col-xs-12">
+  <div class="panel panel-default negative-panel">
+  <div class="panel-body">
+    <i class="fa fa-quote-right" aria-hidden="true"></i>&nbsp;&nbsp;Top Negative Comments <span class="pull-right">
+      Score</span>
+  </div>
+</div>
+  <div class="list-group">
+    <div ng-repeat="negcomments in topNegComments | orderBy:sort">
+    <a href="{{negcomments.user_info.url}}" class="list-group-item" target="_blank">
+      <b>{{negcomments.user_info.name}}:</b><br>{{negcomments.text}}<span class="badge">{{negcomments.score}}</span></a>
+    </div>
+  </div>
+</div>
+
+
+
+    <script type="text/javascript" src="libs/angular.min.js"></script>
+    <script type="text/javascript" src="libs/angular-resource.min.js"></script>
+    <script type="text/javascript" src="libs/angular-animate.min.js"></script>
+    <script src='pdf/pdfmake.min.js'></script>
+    <script src='pdf/vfs_fonts.js'></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <script src="http://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script type="text/javascript" src="js/chart.js"></script>
+    <script type="text/javascript" src="js/piechart.js"></script>
+    <script type="text/javascript" src="js/app.js"></script>
+
+  </body>
+</html>

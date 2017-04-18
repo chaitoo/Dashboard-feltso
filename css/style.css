@@ -1,0 +1,96 @@
+
+body {
+  background-color: #EFEFEF !important;
+}
+
+a {
+  cursor: pointer;
+  color: black;
+}
+
+.navbar .dash{
+  font-family: 'Quicksand', sans-serif;
+  font-size: 27px;
+  color: #FF3B3F
+}
+
+.navbar {
+  height: 75px
+}
+
+.navbar .feltso {
+  color: #A9A9A9;
+}
+
+.highcharts-credits {
+  font-size: 0px !important;
+}
+
+.tile {
+  padding: 15px 15px;
+  background-color: #EFEFEF;
+}
+
+.panel {
+  margin-bottom: 2px !important;
+}
+
+.positive-panel {
+  background-color: #CAEBF2 !important ;
+}
+
+.negative-panel {
+  background-color: #FF3B3F !important ;
+  color: white;
+}
+
+.dislikers-tile {
+  max-height: 190px;
+  overflow-y: scroll;
+}
+
+.panel .tile-title {
+  border-right: 2px black;
+}
+
+.pie-chart {
+  padding-top: 15px;
+}
+
+.list-group {
+  font-family: 'Quicksand', sans-serif;
+}
+
+.panel-body {
+  font-family: 'Quicksand', sans-serif;
+  font-size: 17px
+}
+
+.pic {
+  width:15px;
+  height:15px;
+  border-radius:50px
+}
+
+
+
+.pdf button {
+  padding-top: 150px;
+  padding-right: 50px;
+  font-size: 30px;
+  font-family: 'Quicksand', sans-serif;
+  background-color: trasparent;
+  color:#A9A9A9;
+  border-color: transparent;
+  box-shadow: none
+}
+
+.highcharts-title {
+  font-family: 'Quicksand', sans-serif;
+  font-size: 17px;
+  background-color:#CAEBF2 !important;
+}
+
+.highcharts-button {
+  size: 0px
+}
